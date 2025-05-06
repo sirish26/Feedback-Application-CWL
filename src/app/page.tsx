@@ -14,6 +14,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { toast } from "sonner"
 
 type Feedback = {
+  _id: string;
   name: string
   email: string
   message: string
@@ -32,7 +33,7 @@ export default function Home() {
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 5
+  const pageSize = 8
 
   const fetchFeedbacks = async () => {
     const res = await fetch("/api/feedback")
@@ -106,6 +107,7 @@ export default function Home() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>S.No</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Message</TableHead>
@@ -113,8 +115,9 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedFeedbacks.map((fb, idx) => (
-              <TableRow key={idx}>
+            {paginatedFeedbacks.map((fb, index) => (
+              <TableRow key={fb._id}>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{fb.name}</TableCell>
                 <TableCell>{fb.email}</TableCell>
                 <TableCell className="max-w-sm break-words">{fb.message}</TableCell>
